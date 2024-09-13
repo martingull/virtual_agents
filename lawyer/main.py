@@ -21,7 +21,10 @@ Try to create a legal agent using
  - Compendium of legal documents and "how to ace Bar exam" as domain documents
  - BERT Legal for embeddings
  - ChatGPT 4.o as a chat agent 
-"""
+
+ Comments: 
+- Seems to work, needs more documents, many unknowns in function calls and 'qa and q templates
+ """
 
 # Define the directory containing the text file and the persistent directory
 current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -81,8 +84,6 @@ retriever = db.as_retriever(
 llm = ChatOpenAI(model="gpt-4o")
 
 # Contextualize question prompt
-# This system prompt helps the AI understand that it should reformulate the question
-# based on the chat history to make it a standalone question
 contextualize_q_system_prompt = (
     "Given a chat history and the latest user question "
     "which might reference context in the chat history, "
@@ -101,14 +102,11 @@ contextualize_q_prompt = ChatPromptTemplate.from_messages(
 )
 
 # Create a history-aware retriever
-# This uses the LLM to help reformulate the question based on chat history
 history_aware_retriever = create_history_aware_retriever(
     llm, retriever, contextualize_q_prompt
 )
 
 # Answer question prompt
-# This system prompt helps the AI understand that it should provide concise answers
-# based on the retrieved context and indicates what to do if the answer is unknown
 qa_system_prompt = (
     "You are an assistant for question-answering tasks. Use "
     "the following pieces of retrieved context to answer the "
@@ -129,7 +127,6 @@ qa_prompt = ChatPromptTemplate.from_messages(
 )
 
 # Create a chain to combine documents for question answering
-# `create_stuff_documents_chain` feeds all retrieved context into the LLM
 question_answer_chain = create_stuff_documents_chain(llm, qa_prompt)
 
 # Create a retrieval chain that combines the history-aware retriever and the question answering chain
@@ -138,7 +135,6 @@ rag_chain = create_retrieval_chain(
 
 
 # Set Up ReAct Agent with Document Store Retriever
-# Load the ReAct Docstore Prompt
 react_docstore_prompt = hub.pull("hwchase17/react")
 
 tools = [
