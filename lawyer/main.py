@@ -16,16 +16,6 @@ from langchain_core.messages import AIMessage, HumanMessage
 
 load_dotenv()
 
-"""
-Try to create a legal agent using
- - Compendium of legal documents and "how to ace Bar exam" as domain documents
- - BERT Legal for embeddings
- - ChatGPT 4.o as a chat agent 
-
- Comments: 
-- Seems to work, needs more documents, many unknowns in function calls and 'qa and q templates
- """
-
 # Define the directory containing the text file and the persistent directory
 current_dir = os.path.dirname(os.path.abspath(__file__))
 # TODO: Itterate over files in document folder
@@ -131,10 +121,11 @@ question_answer_chain = create_stuff_documents_chain(llm, qa_prompt)
 
 # Create a retrieval chain that combines the history-aware retriever and the question answering chain
 rag_chain = create_retrieval_chain(
-    history_aware_retriever, question_answer_chain)
+    history_aware_retriever, question_answer_chain
+    )
 
 
-# Set Up ReAct Agent with Document Store Retriever
+# Set Up ReAct Agent with Document Store Retriever (this can also just be defined as a template)
 react_docstore_prompt = hub.pull("hwchase17/react")
 
 tools = [
