@@ -1,7 +1,5 @@
 import os
 import subprocess
-import nmap
-# from zap_gpt import main as zap_gpt
 import requests
 
 from dotenv import load_dotenv
@@ -13,21 +11,19 @@ from langchain.embeddings import HuggingFaceEmbeddings
 from langchain_openai import OpenAIEmbeddings
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.document_loaders import WebBaseLoader, PyPDFLoader
-from langchain_community.document_loaders import JSONLoader
 from langchain_community.vectorstores import Chroma
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
-from langchain_core.messages.system import SystemMessage
 from langchain_core.messages.human import HumanMessage
 from langchain_core.tools import Tool
 from langchain_core.messages import AIMessage, HumanMessage
 from langchain.tools import BaseTool
-from langchain.prompts import PromptTemplate
 
 load_dotenv()
 
 # TODO: Move to argparse
+# TODO: Defaults to english, how to make norwegian? Rewrite promps.
+# TODO: How to mock a rules engine for this POC?
 # TARGET =  "example.com"
-MODEL = "ChatOpenAImini"
 
 # Define the directory containing the text file and the persistent directory
 current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -144,8 +140,9 @@ class QueryRuleSystem(BaseTool):
     def _run(self, ip_address: str):
         """Run an nmap scan on a given IP address."""
         print(f"Running nmap scan on {ip_address}...")
-        scanner = nmap.PortScanner()
-        scan_result = scanner.scan(ip_address, arguments='-sC -sV -vv')
+        # scanner = nmap.PortScanner()
+        # scan_result = scanner.scan(ip_address, arguments='-sC -sV -vv')
+        scan_result = ''
         return scan_result
 
 tools = [
