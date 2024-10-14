@@ -76,23 +76,8 @@ retriever = db.as_retriever(
 )
 
 # Create a ChatOpenAI model
-if MODEL == "ChatOpenAI":
-    from langchain_openai import ChatOpenAI
-    llm = ChatOpenAI(model="gpt-4o")
-elif MODEL == "ChatOpenAImini":
-    from langchain_openai import ChatOpenAI
-    llm = ChatOpenAI(model="gpt-4o-mini")
-elif MODEL == "LLAMA":
-    from langchain_ollama import ChatOllama
-    llm = ChatOllama(model="llama3.1")
-elif MODEL == "GOOGLE":
-    from langchain_google_genai import GoogleGenerativeAI
-    llm = GoogleGenerativeAI()
-else:
-    print(f"WARNING: No know model given in {MODEL}")
-    from langchain_openai import ChatOpenAI
-    llm = ChatOpenAI(model="gpt-4o")
-
+from langchain_openai import ChatOpenAI
+llm = ChatOpenAI(model="gpt-4o")
 
 # Contextualize question prompt
 contextualize_q_system_prompt = (
