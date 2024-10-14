@@ -1,6 +1,4 @@
 import os
-import subprocess
-import requests
 
 from dotenv import load_dotenv
 from langchain import hub
@@ -144,6 +142,17 @@ class QueryRuleSystem(BaseTool):
         # scan_result = scanner.scan(ip_address, arguments='-sC -sV -vv')
         scan_result = ''
         return scan_result
+
+class CheckRetirementAge(BaseTool):
+    name: str = "Check retirement age."
+    description: str = "Check if user is eligable to be retired."
+
+    def _run(self, age: int):
+        """Use rules engine to check retirement eligability"""
+        if age > 65:
+            return "User is old enough to retire"
+        else: 
+            return "User is not yet eligable to retire"
 
 tools = [
     Tool(
