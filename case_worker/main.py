@@ -131,8 +131,8 @@ react_docstore_prompt = hub.pull("hwchase17/react")
 # prompt = hub.pull("hwchase17/structured-chat-agent")
 
 # Define rule query system
-class QueryRuleSystem(BaseTool):
-    name: str = "Query rule system"
+class QueryRulesEngine(BaseTool):
+    name: str = "Query rules engine"
     description: str = "Use this function to query a rule system."
 
     def _run(self, ip_address: str):
@@ -162,7 +162,7 @@ tools = [
         ),
         description="useful for when you need to answer questions about the context",
     ),
-    QueryRuleSystem(),
+    QueryRulesEngine(),
 ]
 
 # Create the ReAct Agent with document store retriever
