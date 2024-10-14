@@ -104,11 +104,11 @@ history_aware_retriever = create_history_aware_retriever(
 
 # Answer question prompt
 qa_system_prompt = (
-    "You are a cybersecurity professional specializing in finding vurnabilites. " 
-    "Use your tools to explore and exploit the application the user wants to examine. "
-    "Use the post request tool to interact with the application.  "
-    "If you can't find any vurnabilites, just say that you "
-    "cannot find any. Keep the answer concise. "
+    "You are a case worker at the unemployment office. " 
+    "Use the rule engine and the chat history to best "
+    "help your clients. "
+    "If you are unsure what to answer ask for more details "
+    "or just state that you don't know. Keep the answer concise. "
     "\n\n"
     "{context}"
 )
