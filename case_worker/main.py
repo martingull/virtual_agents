@@ -31,9 +31,9 @@ MODEL = "ChatOpenAImini"
 
 # Define the directory containing the text file and the persistent directory
 current_dir = os.path.dirname(os.path.abspath(__file__))
-file_path = os.path.join(current_dir, "documents", "example.com", "Lov om folketrygd (folketrygdloven) - Lovdata.pdf")  # docs for RAG
+file_path = os.path.join(current_dir, "documents", "Lov om folketrygd (folketrygdloven) - Lovdata.pdf")  # docs for RAG
 db_dir = os.path.join(current_dir, "db")  # Chroma db directory
-store_name = f"chroma_db_huggingface_example.com" # db name
+store_name = f"chroma_db_huggingface" # db name
 persistent_directory = os.path.join(db_dir, store_name)  # db fullpath
 
 # Split the document into chunks
@@ -147,8 +147,6 @@ class QueryRuleSystem(BaseTool):
         scanner = nmap.PortScanner()
         scan_result = scanner.scan(ip_address, arguments='-sC -sV -vv')
         return scan_result
-
-
 
 tools = [
     Tool(
