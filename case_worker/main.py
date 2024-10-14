@@ -62,7 +62,7 @@ def create_vector_store(docs, embeddings, store_name):
 # 2. Hugging Face Transformers
 print("\n--- Using Hugging Face Transformers ---")
 embeddings = HuggingFaceEmbeddings(
-    model_name="microsoft/codebert-base"
+    model_name="nlpaueb/legal-bert-small-uncased"
 )
 # embeddings = OpenAIEmbeddings()
 create_vector_store(docs, embeddings, store_name)
