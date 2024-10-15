@@ -16,6 +16,9 @@ from langchain_core.tools import Tool
 from langchain_core.messages import AIMessage, HumanMessage
 from langchain.tools import BaseTool
 
+from user_database import get_customers, Customer
+from rules_engine import rules_engine
+
 load_dotenv()
 
 # TODO: Move to argparse
@@ -101,13 +104,11 @@ history_aware_retriever = create_history_aware_retriever(
 qa_system_prompt = (
     "You are a case worker at the unemployment office. " 
     "Use the rule engine and the chat history to best "
-    "help your clients. "
-    "If you are unsure what to answer ask for more details "
+    "help your clients. If you are unsure what to answer ask for more details "
     "or just state that you don't know. Keep the answer concise. "
     "\n\n"
     "{context}"
 )
-
 
 # Create a prompt template for answering questions
 qa_prompt = ChatPromptTemplate.from_messages(
@@ -134,26 +135,13 @@ react_docstore_prompt = hub.pull("hwchase17/react")
 # Define rule query system
 class QueryRulesEngine(BaseTool):
     name: str = "Query rules engine"
-    description: str = "Use this function to query a rule system."
+    description: str = "Use this function to query a rules engine."
 
-    def _run(self, ip_address: str):
-        """Run an nmap scan on a given IP address."""
-        print(f"Running nmap scan on {ip_address}...")
-        # scanner = nmap.PortScanner()
-        # scan_result = scanner.scan(ip_address, arguments='-sC -sV -vv')
-        scan_result = ''
-        return scan_result
-
-class CheckRetirementAge(BaseTool):
-    name: str = "Check retirement age."
-    description: str = "Check if user is eligable to be retired."
-
-    def _run(self, age: int):
-        """Use rules engine to check retirement eligability"""
-        if age > 65:
-            return "User is old enough to retire"
-        else: 
-            return "User is not yet eligable to retire"
+    def _run(self, kundenummer: str):
+        """Fetch client based on customer number"""
+        print(f"Checking client {kundenummer}...")
+        customer = rules_engine(kundenummer)
+        return customer
 
 tools = [
     Tool(
@@ -178,6 +166,8 @@ agent_executor = AgentExecutor.from_agent_and_tools(
 )
 
 chat_history = []
+client_list = get_customers()
+print(f'You can query "kundenummer" {[v for v, k in client_list.items()]} ')
 while True:
     query = input("You: ")
     if query.lower() == "exit":
