@@ -1,20 +1,21 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
+from typing import List, Optional
 from datetime import datetime
 
 class Customer(BaseModel):
     """Information about a customer."""
-    fornavn: str  
-    etternavn: str
-    personnummer: str
-    kundenummer: str
-    fodselsdato: datetime
-    pensjonert: bool
-    kan_pensjoneres: bool
+    fornavn: Optional[str] = Field(default=None, description="The first name of the person")
+    etternavn: Optional[str] = Field(default=None, description="The last name of the person")
+    personnummer: Optional[str] = Field(default=None, description="Person nummer")
+    kundenummer: Optional[str] = Field(default=None, description="Kundenummer eller personnummer")
+    fodselsdato: Optional[datetime] = Field(default=None, description="Date of birth")
+    pensjonert: Optional[bool] = Field(default=None, description="This person is currently retired")
+    kan_pensjoneres: Optional[bool] = Field(default=None, description="This person is eligable to retire")
     
 
 def get_customers():
-    customer = dict()
-    customer['0202198000001'] = Customer(
+    customer_dict = dict()
+    customer_dict['0202198000001'] = Customer(
         fornavn='Anna',
         etternavn='Anna',
         personnummer='00001',
@@ -24,7 +25,7 @@ def get_customers():
         kan_pensjoneres=False
     )
 
-    customer['0202196000002'] = Customer(
+    customer_dict['0202196000002'] = Customer(
         fornavn='Bjorn',
         etternavn='Bjorn',
         personnummer='00002',
@@ -34,7 +35,7 @@ def get_customers():
         kan_pensjoneres=True  # This field should change when rules engine runs.
     )
 
-    customer['0202198000003'] = Customer(
+    customer_dict['0202198000003'] = Customer(
         fornavn='Charley',
         etternavn='Charley',
         personnummer='00003',
@@ -44,4 +45,4 @@ def get_customers():
         kan_pensjoneres=False
     )
 
-    return customer
+    return customer_dict

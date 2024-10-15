@@ -135,7 +135,7 @@ react_docstore_prompt = hub.pull("hwchase17/react")
 # Define rule query system
 class QueryRulesEngine(BaseTool):
     name: str = "Query rules engine"
-    description: str = "Use this function to query a rules engine."
+    description: str = "Use the kundenummer as input to the function to query a rules engine."
 
     def _run(self, kundenummer: str):
         """Fetch client based on customer number"""

@@ -13,4 +13,7 @@
 
 ### Testing
 - [] Added rule which checks if the user is eligable for retirement. Hopefully, this mocks a rules engine.
-    - Test query: "kan man pensjonere seg ved en alder av 60"
+    - Test query: "kan person med kundenummer 0202196000002 pensjonere seg?"
+        - Can retire due to rule engine requires age of 55
+    - Test query: "kan person med kundenummer 0202198000001 pensjonere seg?"
+        - Can not retire due to law being and rule engine being higher
