@@ -27,7 +27,7 @@ load_dotenv()
 current_dir = os.path.dirname(os.path.abspath(__file__))
 file_path = os.path.join(current_dir, "documents", "Lov om folketrygd (folketrygdloven) - Lovdata.pdf")  # docs for RAG
 db_dir = os.path.join(current_dir, "db")  # Chroma db directory
-store_name = f"chroma_db_huggingface" # db name
+store_name = f"chroma_db_openai" # db name
 persistent_directory = os.path.join(db_dir, store_name)  # db fullpath
 
 # Split the document into chunks
@@ -53,12 +53,13 @@ def create_vector_store(docs, embeddings, store_name):
         print(
             f"Vector store {store_name} already exists. No need to initialize.")
 
-# 2. Hugging Face Transformers
-print("\n--- Using Hugging Face Transformers ---")
-embeddings = HuggingFaceEmbeddings(
-    model_name="nlpaueb/legal-bert-small-uncased"
-)
-# embeddings = OpenAIEmbeddings()
+# # 2. Hugging Face Transformers
+# print("\n--- Using Hugging Face Transformers ---")
+# embeddings = HuggingFaceEmbeddings(
+#     model_name="nlpaueb/legal-bert-small-uncased"
+# )
+print("\n--- Open AI Transformers ---")
+embeddings = OpenAIEmbeddings()
 create_vector_store(docs, embeddings, store_name)
 print(f"Embedding demonstrations for {store_name}.")
 
