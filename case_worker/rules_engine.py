@@ -9,6 +9,11 @@ def _run_rules_engine():
             print(f'Setting {kundenummer} status "kan_pensjoneres" True')
             customer_list[kundenummer].kan_pensjoneres = True
 
+    for kundenummer, _ in customer_list.items():
+        if customer_list[kundenummer].ansiennitet > timedelta(weeks=15*52):
+            print(f'Setting vacation to 7 weeks for {kundenummer}')
+            customer_list[kundenummer].maks_ferie = timedelta(weeks=7)
+            
     return customer_list
 
 def rules_engine(kundenummer: str):
