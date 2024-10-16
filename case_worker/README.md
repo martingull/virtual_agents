@@ -7,6 +7,7 @@
 
 ### The RAG data
 - [folketrygd loven](https://lovdata.no/dokument/NL/lov/1997-02-28-19/*#&#x2a;)
+- I pressede get entire page and printed the html as pdf using Chrome. Easy way to manually crawl.
 
 ### The rule system
 - [no clue atm](d)
